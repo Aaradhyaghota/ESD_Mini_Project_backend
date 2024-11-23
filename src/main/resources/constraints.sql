@@ -26,8 +26,7 @@
 # ALTER TABLE students
 #     ADD CONSTRAINT chk_email_format CHECK (email LIKE '%@%.%');
 #
-# ALTER TABLE students
-#     ADD CONSTRAINT chk_roll_number_format CHECK (roll_number LIKE 'MT20%');
+#
 #
 # ALTER TABLE students
 #     ADD CONSTRAINT chk_cgpa_range CHECK (cgpa >= 0 AND cgpa <= 10);
