@@ -4,8 +4,10 @@ import com.aaradhya.acedmiaerpbackend.entity.Domain;
 import com.aaradhya.acedmiaerpbackend.entity.Placement;
 import com.aaradhya.acedmiaerpbackend.entity.Specialization;
 import com.aaradhya.acedmiaerpbackend.entity.Students;
+import com.aaradhya.acedmiaerpbackend.helper.JwtHelper;
 import com.aaradhya.acedmiaerpbackend.service.StudentServices;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,10 +21,21 @@ import java.util.List;
 public class studentController {
 
     private final StudentServices studentServices;
+    private final JwtHelper jwtHelper;
 
+    @PostMapping("/validate")
+    public boolean checkValidity(@RequestHeader("Authorization") String auth){
+        if(auth == null || !auth.startsWith("Bearer ")) {
+            return false;
+        }
+        String token = auth.replace("Bearer ", "").trim();
+
+        return jwtHelper.validateToken(token);
+    }
 
     @PostMapping("/register")
     public ResponseEntity<String> registerStudent(
+            @RequestHeader ("Authorization") String auth,
             @RequestParam("first_name") String firstname,
             @RequestParam("last_name") String lastname,
             @RequestParam("email") String email,
@@ -33,9 +46,18 @@ public class studentController {
             @RequestParam("domain_id") int domain_fk,
             @RequestParam("specialization_id") int specialization_fk,
             @RequestParam("placement_id") int placement_fk
-    ) {
+    )throws RuntimeException {
 
-        Domain domain = studentServices.getDomain(domain_fk);
+        if(auth == null || !auth.startsWith("Bearer ")) {
+            throw new RuntimeException("Invalid Authorization");
+        }
+        String token = auth.replace("Bearer ", "").trim();
+
+        if (!jwtHelper.validateToken(token)) {
+            throw new RuntimeException("Invalid Token");
+        }
+
+        Domain domain = studentServices.getDomains(domain_fk);
         Specialization specialization = studentServices.getSpez(specialization_fk);
         Placement placement = studentServices.getPlacement(placement_fk);
         Students student = Students.builder()
