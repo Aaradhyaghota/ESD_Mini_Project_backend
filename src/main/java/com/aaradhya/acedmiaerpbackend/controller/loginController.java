@@ -19,7 +19,8 @@ public class loginController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody @Valid AdminRequest request){
-        return ResponseEntity.ok(adminService.loginAdmin(request));
+        String token = adminService.loginAdmin(request);
+        return ResponseEntity.ok(token);
     }
 
 }
