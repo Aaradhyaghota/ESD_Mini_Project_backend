@@ -4,6 +4,7 @@ import com.aaradhya.acedmiaerpbackend.entity.Domain;
 import com.aaradhya.acedmiaerpbackend.entity.Placement;
 import com.aaradhya.acedmiaerpbackend.entity.Specialization;
 import com.aaradhya.acedmiaerpbackend.entity.Students;
+import com.aaradhya.acedmiaerpbackend.helper.EncryptionService;
 import com.aaradhya.acedmiaerpbackend.repo.DomainRepo;
 import com.aaradhya.acedmiaerpbackend.repo.PlacementRepo;
 import com.aaradhya.acedmiaerpbackend.repo.SpecializationRepo;
@@ -26,13 +27,17 @@ public class StudentServices {
     private final DomainRepo domainRepo;
     private final SpecializationRepo specializationRepo;
     private final PlacementRepo placementRepo;
+    private final EncryptionService encryptionService;
 
     @Value("${photograph.upload-dir}") // Directory path from application.properties
     private String uploadDir;
 
     public String registerStudent(Students student, MultipartFile photograph) {
         try {
-            String rollNumber = generateRollNumber(student.getDomain());
+            String rollNumber = generateNextSequentialNumber(student.getDomain());
+            if (studentRepo.existsByRollNumber(rollNumber)) {
+                throw new RuntimeException("Roll number " + rollNumber + " already exists.");
+            }
 
             student.setRollNumber(rollNumber);
 
@@ -74,51 +79,38 @@ public class StudentServices {
         return filePath.toString();
     }
 
-
-    //roll no.
-    private String generateRollNumber(Domain domain) {
-        // Extract the full batch year (e.g., 2024)
-        String batchYear = String.valueOf(domain.getBatch());
-
-        // Determine the program prefix
-        String programPrefix = getProgramPrefix(domain.getProgram());
-
-        // Generate the next sequential roll number (fetch from DB)
-        String sequentialNumber = generateNextSequentialNumber(domain);
-
-        // Combine program prefix, batch year, and sequential number to form the roll number
-        return programPrefix + batchYear + sequentialNumber;
-    }
-
     private String generateNextSequentialNumber(Domain domain) {
-        // Fetch the last roll number generated for this domain and batch from the database
+        String program = domain.getProgram();
+        int batchYear = domain.getBatch();
+
+        // Query the database for the last generated roll number in the given domain and batch
         String lastRollNumber = studentRepo.findLastRollNumberByDomainAndBatch(domain.getDomainId(), domain.getBatch());
-
-        // If no roll number exists yet, start with '00001'
+        int domainID = domain.getDomainId();
+        // If there is no previous roll number, start from 00001
+        // If no roll number exists, start with the first one
         if (lastRollNumber == null) {
-            return "00001";
+            if (program.startsWith("MTech")) {
+                return "MT" + batchYear + domainID + "00001";
+            } else if (program.startsWith("BTech")) {
+                return "BT" + batchYear + domainID + "00001";
+            } else if (program.startsWith("Ph.D.")) {
+                return "PHD" + batchYear + domainID + "00001";
+            }
         }
 
-        // Extract the numeric part of the last roll number
-        String lastSequentialPart = lastRollNumber.substring(lastRollNumber.length() - 5);
+        // Extract the numeric part of the roll number
+        String rollNumberPart = lastRollNumber.substring(lastRollNumber.length() - 5);
+        int nextRollNumber = Integer.parseInt(rollNumberPart) + 1;
 
-        // Increment the numeric part by 1
-        int nextSequentialNumber = Integer.parseInt(lastSequentialPart) + 1;
-
-        // Format it back to a 5-digit string
-        return String.format("%05d", nextSequentialNumber);
-    }
-
-    private static String getProgramPrefix(String programName) {
-        if (programName.contains("BTech")) {
-            return "BT";
-        } else if (programName.contains("MTech")) {
-            return "MT";
-        } else if (programName.contains("Ph.D.")) {
-            return "PHD";
-        } else {
-            return "OT"; // Default to "OT" (Other) if program is not recognized
+        if (program.startsWith("MTech")) {
+            return "MT" + batchYear + domainID + String.format("%05d", nextRollNumber);
+        } else if (program.startsWith("BTech")) {
+            return "BT" + batchYear + domainID + String.format("%05d", nextRollNumber);
+        } else if (program.startsWith("Ph.D.")) {
+            return "PHD" + batchYear + domainID + String.format("%05d", nextRollNumber);
         }
+
+        return null;
     }
 
     public List<Domain> getAllDomains() {
@@ -133,7 +125,7 @@ public class StudentServices {
         return placementRepo.findAll();
     }
 
-    public Domain getDomain(int id) throws RuntimeException {
+    public Domain getDomains(int id) throws RuntimeException {
         return domainRepo.findById(id).orElseThrow( ()-> new RuntimeException("Domain not found"));
     }
 
@@ -144,4 +136,6 @@ public class StudentServices {
     public Placement getPlacement(int id) throws RuntimeException {
         return placementRepo.findById(id).orElseThrow( ()-> new RuntimeException("Placement not found"));
     }
+
+
 }
