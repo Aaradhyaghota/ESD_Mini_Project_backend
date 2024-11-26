@@ -5,8 +5,8 @@ USE Acedmia_ERP;
 
 -- Domains table creation
 CREATE TABLE IF NOT EXISTS domains (
-                                       domain_id INT PRIMARY KEY AUTO_INCREMENT,
-                                       program VARCHAR(100),
+    domain_id INT PRIMARY KEY AUTO_INCREMENT,
+    program VARCHAR(100),
     batch INT,
     capacity INT,
     qualification VARCHAR(255)
@@ -14,8 +14,8 @@ CREATE TABLE IF NOT EXISTS domains (
 
 -- Specialization table creation
 CREATE TABLE IF NOT EXISTS specialization (
-                                              specialization_id INT PRIMARY KEY AUTO_INCREMENT,
-                                              code VARCHAR(50) UNIQUE NOT NULL,
+    specialization_id INT PRIMARY KEY AUTO_INCREMENT,
+    code VARCHAR(50) UNIQUE NOT NULL,
     name VARCHAR(100),
     description TEXT,
     year INT,
@@ -24,16 +24,16 @@ CREATE TABLE IF NOT EXISTS specialization (
 
 -- Organization table creation
 CREATE TABLE IF NOT EXISTS organizations (
-                                             id INT PRIMARY KEY AUTO_INCREMENT,
-                                             name VARCHAR(255),
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255),
     address VARCHAR(500)
     );
 
 -- Placement table creation
 CREATE TABLE IF NOT EXISTS placement (
-                                         id INT PRIMARY KEY AUTO_INCREMENT,
-                                         organization_fk INT,
-                                         profile VARCHAR(100),
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    organization_fk INT,
+    profile VARCHAR(100),
     description TEXT,
     intake INT,
     minimum_grade DECIMAL(3, 2)
@@ -41,8 +41,8 @@ CREATE TABLE IF NOT EXISTS placement (
 
 -- Students table creation
 CREATE TABLE IF NOT EXISTS students (
-                                        student_id INT PRIMARY KEY AUTO_INCREMENT,
-                                        roll_number VARCHAR(20) UNIQUE NOT NULL,
+    student_id INT PRIMARY KEY AUTO_INCREMENT,
+    roll_number VARCHAR(20) UNIQUE NOT NULL,
     first_name VARCHAR(100),
     last_name VARCHAR(100),
     email VARCHAR(255) UNIQUE NOT NULL,
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS students (
     );
 
 CREATE TABLE IF NOT EXISTS admin (
-                                     id INT PRIMARY KEY AUTO_INCREMENT,
-                                     email VARCHAR(20) UNIQUE NOT NULL,
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    email VARCHAR(20) UNIQUE NOT NULL,
     password VARCHAR(100) NOT NULL
     );

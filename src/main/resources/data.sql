@@ -45,35 +45,38 @@
 #  -- Inserting records for IT Companies
 #  INSERT INTO organizations (id, name ,address)
 #  VALUES
-#      (1, 'Tata Consultancy Services',   'Mumbai, India'),
-#      (2, 'Infosys',   'Bengaluru, India'),
-#      (3, 'Wipro',  'Bengaluru, India'),
-#      (4, 'Accenture', 'Dublin, Ireland'),
-#      (5, 'Cognizant',  'Teaneck, New Jersey, USA'),
-#      (6, 'HCL Technologies', 'Noida, India'),
-#      (7, 'Tech Mahindra', 'Pune, India'),
-#      (8, 'Capgemini',  'Paris, France');
+#      (1,'NA','NA'),
+#      (2, 'Tata Consultancy Services',   'Mumbai, India'),
+#      (3, 'Infosys',   'Bengaluru, India'),
+#      (4, 'Wipro',  'Bengaluru, India'),
+#      (5, 'Accenture', 'Dublin, Ireland'),
+#      (6, 'Cognizant',  'Teaneck, New Jersey, USA'),
+#      (7, 'HCL Technologies', 'Noida, India'),
+#      (8, 'Tech Mahindra', 'Pune, India'),
+#      (9, 'Capgemini',  'Paris, France');
+#
 #
 #  -- Inserting records for Electronics Companies
 #  INSERT INTO organizations (id, name, address)
 #  VALUES
-#      (9, 'Samsung Electronics', 'Seoul, South Korea'),
-#      (10, 'Sony Corporation',  'Tokyo, Japan'),
-#      (11, 'Intel Corporation', 'Santa Clara, California, USA');
+#      (10, 'Samsung Electronics', 'Seoul, South Korea'),
+#      (11, 'Sony Corporation',  'Tokyo, Japan'),
+#      (12, 'Intel Corporation', 'Santa Clara, California, USA');
 #
 #  -- Inserting Placement records for IT Companies
 #  INSERT INTO placement (id, organization_fk, profile, intake, minimum_grade, description)
 #  VALUES
-#      (1, 1, 'SDE', 10, 3.50, 'Tata Consultancy Services offers internships and full-time placements for B.Tech students in various engineering disciplines.'),
-#      (2, 2, 'SDE', 8, 3.80, 'Infosys provides M.Tech placements in software development and IT consulting roles, with a focus on technology innovation.'),
-#      (3, 3, 'SDE', 7, 3.70, 'Wipro hires B.Tech graduates for software engineering and consulting roles, focusing on digital transformation and tech development.'),
-#      (4, 4, 'SDE', 6, 3.90, 'Accenture recruits M.Tech students for high-level consulting, technology innovation, and IT infrastructure roles.'),
-#      (5, 5, 'SDE', 9, 3.60, 'Cognizant offers B.Tech placements in software development, IT solutions, and consulting services, with opportunities for international exposure.'),
-#      (6, 6, 'SDE', 10, 3.85, 'HCL Technologies hires M.Tech graduates for advanced technology and R&D positions, including roles in cloud computing and AI.'),
-#      (7, 7, 'SDE', 6, 3.55, 'Tech Mahindra offers B.Tech placements in IT, consulting, and engineering domains, with a strong focus on digital technologies.'),
-#      (8, 8, 'SDE', 5, 3.95, 'Capgemini provides M.Tech students with opportunities in technology consulting, software engineering, and AI research.'),
+#      (1, 1, 'NA', 0, 0,'NA'),
+#      (2, 2, 'SDE', 10, 3.50, 'Tata Consultancy Services offers internships and full-time placements for B.Tech students in various engineering disciplines.'),
+#      (3, 3, 'SDE', 8, 3.80, 'Infosys provides M.Tech placements in software development and IT consulting roles, with a focus on technology innovation.'),
+#      (4, 4, 'SDE', 7, 3.70, 'Wipro hires B.Tech graduates for software engineering and consulting roles, focusing on digital transformation and tech development.'),
+#      (5, 5, 'SDE', 6, 3.90, 'Accenture recruits M.Tech students for high-level consulting, technology innovation, and IT infrastructure roles.'),
+#      (6, 6, 'SDE', 9, 3.60, 'Cognizant offers B.Tech placements in software development, IT solutions, and consulting services, with opportunities for international exposure.'),
+#      (7, 7, 'SDE', 10, 3.85, 'HCL Technologies hires M.Tech graduates for advanced technology and R&D positions, including roles in cloud computing and AI.'),
+#      (8, 8, 'SDE', 6, 3.55, 'Tech Mahindra offers B.Tech placements in IT, consulting, and engineering domains, with a strong focus on digital technologies.'),
+#      (9, 9, 'SDE', 5, 3.95, 'Capgemini provides M.Tech students with opportunities in technology consulting, software engineering, and AI research.'),
 #
 #  -- Inserting Placement records for Electronics Companies
-#      (9, 9, 'Engineer', 8, 3.60, 'Samsung Electronics hires B.Tech students for hardware design, semiconductor engineering, and consumer electronics projects.'),
-#      (10, 10, 'Engineer', 7, 3.80, 'Sony Corporation offers M.Tech placements in electronics engineering, robotics, and AI for consumer electronics.'),
-#      (11, 11, 'Engineer', 6, 3.70, 'Intel recruits B.Tech graduates for hardware development, VLSI design, and semiconductor research and development roles.');
+#      (10, 10, 'Engineer', 8, 3.60, 'Samsung Electronics hires B.Tech students for hardware design, semiconductor engineering, and consumer electronics projects.'),
+#      (11, 11, 'Engineer', 7, 3.80, 'Sony Corporation offers M.Tech placements in electronics engineering, robotics, and AI for consumer electronics.'),
+#      (12, 12, 'Engineer', 6, 3.70, 'Intel recruits B.Tech graduates for hardware development, VLSI design, and semiconductor research and development roles.');
